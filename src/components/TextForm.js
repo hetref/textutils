@@ -3,7 +3,11 @@ import React, { useState } from "react";
 export default function TextForm(props) {
   const [text, setText] = useState("");
 
-  var timeToRead = 0.008 * text.split(" ").length;
+  var timeToRead =
+    0.008 *
+    text.split(" ").filter((element) => {
+      return element.length !== 0;
+    }).length;
 
   const handleUpClick = () => {
     let newText = text.toUpperCase();
@@ -46,22 +50,22 @@ export default function TextForm(props) {
             onChange={handleOnChange}
           ></textarea>
         </div>
-        <button className={"mx-1 my-1 btn btn-success"} onClick={handleUpClick}>
+        <button disabled={text.length===0} className={"mx-1 my-1 btn btn-success"} onClick={handleUpClick}>
           Convert to Uppercase
         </button>
-        <button
+        <button disabled={text.length===0}
           className={"mx-1 my-1 btn btn-success"}
           onClick={handleLowClick}
         >
           Convert to Lowercase
         </button>
-        <button
+        <button disabled={text.length===0}
           className={"mx-1 my-1 btn btn-success"}
           onClick={handleExtraSpaces}
         >
           Remove Extra
         </button>
-        <button
+        <button disabled={text.length===0}
           className={"mx-1 my-1 btn btn-success"}
           onClick={handleClearClick}
         >
@@ -83,13 +87,14 @@ export default function TextForm(props) {
           Words and {text.length} Characters.
         </p>
         <p>
-          Average time the text will take to read is - {timeToRead.toFixed(3)} Minutes
+          Average time the text will take to read is - {timeToRead.toFixed(3)}{" "}
+          Minutes
         </p>
         <h2>Preview</h2>
         <p>
           {text.length > 0
             ? text
-            : "Enter something in the textbox above to preview it here!"}
+            : "Enter the text above to preview it here!"}
         </p>
       </div>
     </>
